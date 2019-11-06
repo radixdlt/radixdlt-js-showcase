@@ -2,7 +2,7 @@
   <div class="section" v-if="identity">
     <h2 class="title">Write Data</h2>
     <section class="form">
-      <b-field horizontal label="Source address" type="is-dark has-background-light" >
+      <b-field horizontal label="Source address" type="is-dark has-background-light">
         <b-input :value="identity.address.toString()" class="input-field" readonly></b-input>
       </b-field>
       <b-field horizontal label="Destination address">
@@ -24,30 +24,36 @@
           </b-button>
         </div>
       </b-field>
-      <b-field>
-        <p class="help">{{status}}</p>
-      </b-field>
+      <b-message :type="status.type" class="status" v-show="status.message">
+        {{status.message.toUpperCase()}}
+      </b-message>
     </section>
   </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import {mapState} from 'vuex';
-  import {RadixTransactionBuilder, RadixAccount} from 'radixdlt';
+  import {RadixTransactionBuilder, RadixAccount, RadixIdentity} from 'radixdlt';
 
   export default Vue.extend({
     data() {
       return {
         address: '',
         applicationId: '',
-        status: '',
         payload: '',
         encrypted: false,
-      }
+        status: {
+          message: '',
+          type: ''
+        }
+      };
     },
     name: 'write_data',
-    computed: mapState(['identity']),
+    computed: {
+      identity(): RadixIdentity {
+        return this.$store.state.identity;
+      }
+    },
     methods: {
       send() {
         try {
@@ -56,12 +62,12 @@
               this.identity.account, [this.identity.account, toAccount], this.applicationId, this.payload, this.encrypted)
               .signAndSubmit(this.identity)
               .subscribe({
-                next: status => this.status = status,
-                complete: () => this.status = 'Sent',
-                error: error => this.status = error
+                next: status => this.status = {message: status, type: 'is-dark'},
+                complete: () => this.status = {message: 'Sent successfully', type: 'is-success'},
+                error: error => this.status = {message: error.toString(), type: 'is-danger'}
               })
         } catch (e) {
-          this.status = e.message;
+          this.status = {message: e.message, type: 'is-danger'};
         }
       }
     }
@@ -93,5 +99,11 @@
   #footer-row > button {
     display: flex;
     width: 200px;
+  }
+
+  .status {
+    position: absolute;
+    bottom: 0;
+    font-weight: bold;
   }
 </style>
