@@ -11,7 +11,7 @@
     </b-field>
 
     <b-table :data="applicationData"
-             :paginated="Boolean(applicationData.length > pageSize)"
+             :paginated="applicationData.length > pageSize"
              :per-page="pageSize"
              ref="table"
              hoverable
