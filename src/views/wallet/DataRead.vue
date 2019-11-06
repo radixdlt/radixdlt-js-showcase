@@ -92,9 +92,9 @@
 
         if (!identity) return [];
 
-        const dataArray = identity.account.dataSystem.applicationData.values().flatMap(a => a.values());
+        const rawData = identity.account.dataSystem.applicationData.values().flatMap(a => a.values());
 
-        const data = dataArray.reverse().map((d, idx) => ({
+        const formattedData = rawData.reverse().map((d, idx) => ({
           id: idx + 1,
           timestamp: new Date(d.timestamp).toLocaleString(),
           applicationId: d.payload.application,
@@ -106,9 +106,9 @@
           isSender: identity.account.address.toString().trim() === d.payload.from.toString().trim()
         }));
 
-        if (!this.filterValue) return data;
+        if (!this.filterValue) return formattedData;
 
-        return data.filter(d =>
+        return formattedData.filter(d =>
             d.applicationId.toLocaleLowerCase().includes(this.filterValue.toLocaleLowerCase()));
       },
     },
