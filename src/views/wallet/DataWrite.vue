@@ -1,35 +1,29 @@
 <template>
   <div class="section" v-if="identity">
     <h2 class="title">Write Data</h2>
-    <section>
-      <b-field>
-        <p class="control"><span class="button is-static input-label">From Address</span></p>
+    <section class="form">
+      <b-field horizontal label="Source address" type="is-dark has-background-light" >
         <b-input :value="identity.address.toString()" class="input-field" readonly></b-input>
       </b-field>
-      <br/>
-      <b-field>
-        <p class="control"><span class="button is-static input-label">To Address</span></p>
+      <b-field horizontal label="Destination address">
         <b-input v-model="address" class="input-field"></b-input>
       </b-field>
-      <br/>
-      <b-field>
-        <p class="control"><span class="button is-static input-label">Application ID</span></p>
+      <b-field horizontal label="Application ID">
         <b-input v-model="applicationId" class="input-field"></b-input>
       </b-field>
-      <br/>
-      <b-field label="Data payload">
-        <b-input type="textarea" placeholder="..." v-model="payload"></b-input>
+      <b-field horizontal label="Payload">
+        <b-input type="textarea" placeholder="" v-model="payload"></b-input>
       </b-field>
-      <div id="footer-row">
-        <b-switch v-model="encrypted">
-          Encrypt
-        </b-switch>
-        <b-field>
-          <b-button @click="send" type="is-primary" class="send-button"
+      <b-field horizontal>
+        <div id="footer-row">
+          <b-switch v-model="encrypted">
+            Encrypt
+          </b-switch>
+          <b-button @click="send" type="is-primary"
                     :disabled="!payload.length || !address.length || !applicationId.length">Send
           </b-button>
-        </b-field>
-      </div>
+        </div>
+      </b-field>
       <b-field>
         <p class="help">{{status}}</p>
       </b-field>
@@ -75,14 +69,19 @@
 </script>
 
 <style scoped>
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  .form > div {
+    padding-top: 10px;
+  }
+
   .input-field {
     display: flex;
     width: 100%;
-  }
-
-  .input-label {
-    display: flex;
-    width: 160px;
   }
 
   #footer-row {
@@ -91,7 +90,7 @@
     justify-content: space-between;
   }
 
-  .send-button {
+  #footer-row > button {
     display: flex;
     width: 200px;
   }
