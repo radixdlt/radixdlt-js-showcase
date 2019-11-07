@@ -24,9 +24,6 @@
           </b-button>
         </div>
       </b-field>
-      <b-message :type="status.type" class="status" v-show="status.message">
-        {{status.message.toUpperCase()}}
-      </b-message>
     </section>
   </div>
 </template>
@@ -35,6 +32,8 @@
   import Vue from 'vue';
   import {RadixTransactionBuilder, RadixAccount, RadixIdentity} from 'radixdlt';
 
+  const toasts: Array<any> = [];
+
   export default Vue.extend({
     data() {
       return {
@@ -42,10 +41,6 @@
         applicationId: '',
         payload: '',
         encrypted: false,
-        status: {
-          message: '',
-          type: ''
-        }
       };
     },
     name: 'write_data',
@@ -62,13 +57,27 @@
               this.identity.account, [this.identity.account, toAccount], this.applicationId, this.payload, this.encrypted)
               .signAndSubmit(this.identity)
               .subscribe({
-                next: status => this.status = {message: status, type: 'is-dark'},
-                complete: () => this.status = {message: 'Sent successfully', type: 'is-success'},
-                error: error => this.status = {message: error.toString(), type: 'is-danger'}
+                next: status => this.showStatus(status),
+                complete: () => this.showStatus('SENT SUCCESSFULLY', 'is-success'),
+                error: error => this.showStatus(error.toString(), 'is-danger'),
               })
         } catch (e) {
-          this.status = {message: e.message, type: 'is-danger'};
+          this.showStatus(e.message, 'is-danger')
         }
+      },
+      showStatus(message: string, type = 'is-light') {
+        if (toasts.length > 0) {
+          const previousToast = toasts[toasts.length - 1];
+          setTimeout(() => previousToast.close(), 500);
+        }
+
+        toasts.push(this.$buefy.toast.open({
+          queue: false,
+          duration: 5000,
+          message: message,
+          position: 'is-bottom',
+          type: type
+        }));
       }
     }
   });
@@ -99,11 +108,5 @@
   #footer-row > button {
     display: flex;
     width: 200px;
-  }
-
-  .status {
-    position: absolute;
-    bottom: 0;
-    font-weight: bold;
   }
 </style>
