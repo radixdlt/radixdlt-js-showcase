@@ -5,7 +5,8 @@
       <b-field horizontal label="Source address" type="is-dark has-background-light">
         <b-input :value="identity.address.toString()" class="input-field" readonly></b-input>
       </b-field>
-      <b-field horizontal label="Destination address">
+      <b-field horizontal label="Destination address"
+               message="To add multiple destination addresses, separate them by commas">
         <b-input v-model="address" class="input-field"></b-input>
       </b-field>
       <b-field horizontal label="Application ID">
@@ -52,9 +53,10 @@
     methods: {
       send() {
         try {
-          const toAccount = RadixAccount.fromAddress(this.address);
-          RadixTransactionBuilder.createPayloadAtom(
-              this.identity.account, [this.identity.account, toAccount], this.applicationId, this.payload, this.encrypted)
+          const destinationAccounts = this.address.split(',').map(a => RadixAccount.fromAddress(a.trim()));
+
+          RadixTransactionBuilder.createPayloadAtom(this.identity.account, [this.identity.account, ...destinationAccounts],
+              this.applicationId, this.payload, this.encrypted)
               .signAndSubmit(this.identity)
               .subscribe({
                 next: status => this.showStatus(status),
