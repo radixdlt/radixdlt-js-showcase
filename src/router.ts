@@ -3,8 +3,8 @@ import Router from 'vue-router';
 import Balance from './views/wallet/Balance.vue';
 import Transactions from './views/wallet/Transactions.vue';
 import Send from './views/wallet/Send.vue';
-import DataWrite from "@/views/wallet/DataWrite.vue";
-import DataRead from "@/views/wallet/DataRead.vue";
+import DataWrite from './views/data/DataWrite.vue';
+import DataRead from './views/data/DataRead.vue';
 
 Vue.use(Router);
 
