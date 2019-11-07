@@ -94,17 +94,19 @@
 
         const rawData = identity.account.dataSystem.applicationData.values().flatMap(a => a.values());
 
-        const formattedData = rawData.reverse().map((d, idx) => ({
-          id: idx + 1,
-          timestamp: new Date(d.timestamp).toLocaleString(),
-          applicationId: d.payload.application,
-          payload: d.payload.data,
-          aid: d.aid,
-          encrypted: d.payload.decryptionState,
-          from: d.payload.from,
-          to: d.payload.to.map((a: RadixAddress) => a.toString()).join(",\r\n"),
-          isSender: identity.account.address.toString().trim() === d.payload.from.toString().trim()
-        }));
+        const formattedData = rawData
+            .sort((d1, d2) => d2.timestamp - d1.timestamp)
+            .map((d, idx) => ({
+              id: idx + 1,
+              timestamp: new Date(d.timestamp).toLocaleString(),
+              applicationId: d.payload.application,
+              payload: d.payload.data,
+              aid: d.aid,
+              encrypted: d.payload.decryptionState,
+              from: d.payload.from,
+              to: d.payload.to.map((a: RadixAddress) => a.toString()).join(",\r\n"),
+              isSender: identity.account.address.toString().trim() === d.payload.from.toString().trim()
+            }));
 
         if (!this.filterValue) return formattedData;
 
