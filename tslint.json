@@ -1,12 +1,8 @@
 {
   "defaultSeverity": "warning",
-  "extends": [
-    "tslint:recommended"
-  ],
+  "extends": ["tslint:recommended"],
   "linterOptions": {
-    "exclude": [
-      "node_modules/**"
-    ]
+    "exclude": ["node_modules/**"]
   },
   "rules": {
     "quotemark": [true, "single"],
@@ -18,6 +14,7 @@
     "semicolon": false,
     "no-trailing-whitespace": false,
     "no-console": false,
-    "arrow-parens": false
+    "arrow-parens": false,
+    "curly": false
   }
 }
