@@ -25,7 +25,7 @@
           {{props.row.id}}
         </b-table-column>
         <b-table-column field="timestamp" label="Timestamp" width="300" sortable>
-          {{props.row.timestamp}}
+          {{new Date(props.row.timestamp).toLocaleString()}}
         </b-table-column>
         <b-table-column field="applicationId" label="Application ID" width="300" sortable>
           {{props.row.applicationId}}
@@ -98,7 +98,7 @@
             .sort((d1, d2) => d2.timestamp - d1.timestamp)
             .map((d, idx) => ({
               id: idx + 1,
-              timestamp: new Date(d.timestamp).toLocaleString(),
+              timestamp: d.timestamp,
               applicationId: d.payload.application,
               payload: d.payload.data,
               aid: d.aid,
