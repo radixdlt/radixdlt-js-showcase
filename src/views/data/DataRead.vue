@@ -95,7 +95,7 @@ import { RadixIdentity, RadixAddress } from 'radixdlt';
 export default Vue.extend({
   data() {
     return {
-      pageSize: 5,
+      pageSize: 10,
       filterValue: '',
     };
   },

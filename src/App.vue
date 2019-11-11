@@ -73,7 +73,7 @@ export default Vue.extend({
   },
   computed: mapState(['identity']),
   created() {
-    radixUniverse.bootstrap(RadixUniverse.BETANET);
+    radixUniverse.bootstrap(RadixUniverse.BETANET_EMULATOR);
     this.loadIdentity();
   },
   methods: {

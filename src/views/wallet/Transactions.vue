@@ -2,10 +2,21 @@
   <div class="section">
     <h2 class="title">My Transactions</h2>
 
-    <b-table :data="transactions" show-detail-icon detailed detail-key="aid">
+    <b-table
+      :data="transactions"
+      :paginated="transactions.length > pageSize"
+      :per-page="pageSize"
+      ref="table"
+      hoverable
+      default-sort="timestamp"
+      default-sort-direction="desc"
+      detailed
+      detail-key="aid"
+      show-detail-icon
+    >
       <template slot-scope="props">
         <b-table-column field="timestamp" label="Timestamp" sortable>
-          {{ props.row.timestamp }}
+          {{ new Date(props.row.timestamp).toLocaleString() }}
         </b-table-column>
 
         <b-table-column field="balance" label="Balance">
@@ -50,10 +61,10 @@ export default Vue.extend({
         balance: { [symbol: string]: string };
         participants: string[];
         reference: string;
-        timestamp: string;
+        timestamp: number;
         aid: string;
       }>,
-
+      pageSize: 10,
       transactionSubscription: null as (Subscription | null),
     };
   },
@@ -105,7 +116,7 @@ export default Vue.extend({
         this.transactions.push({
           balance,
           participants,
-          timestamp: new Date(tx.timestamp).toISOString(),
+          timestamp: tx.timestamp,
           reference: tx.message,
           aid: tx.aid.toString(),
         });
