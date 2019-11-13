@@ -20,9 +20,7 @@
         </b-table-column>
 
         <b-table-column field="balance" label="Balance">
-          <div v-for="(amount, symbol) in props.row.balance" :key="symbol">
-            {{ amount }} {{ symbol }}
-          </div>
+          <div v-for="(amount, symbol) in props.row.balance" :key="symbol">{{ amount }} {{ symbol }}</div>
         </b-table-column>
 
         <b-table-column field="participants" label="Participants">
@@ -39,7 +37,7 @@
       <template slot="detail" slot-scope="props">
         <table class="table">
           <tr>
-            <td>AID</td>
+            <td class="has-text-weight-bold">AID</td>
             <td>{{ props.row.aid }}</td>
           </tr>
         </table>
@@ -51,7 +49,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import { RadixTransactionUpdate, RadixTransaction, RRI } from 'radixdlt';
+import { RadixTransactionUpdate, RadixTransaction, RRI, RadixIdentity } from 'radixdlt';
 import { Subscription } from 'rxjs';
 
 export default Vue.extend({
@@ -85,16 +83,12 @@ export default Vue.extend({
           this.transactionSubscription.unsubscribe();
         }
 
-        this.updateTransactionList(
-          this.identity.account.transferSystem.transactions.values(),
-        );
+        this.updateTransactionList(this.identity.account.transferSystem.transactions.values());
 
         this.transactionSubscription = this.identity.account.transferSystem
           .getAllTransactions()
           .subscribe((tx: RadixTransactionUpdate) => {
-            this.updateTransactionList(
-              this.identity.account.transferSystem.transactions.values(),
-            );
+            this.updateTransactionList(this.identity.account.transferSystem.transactions.values());
           });
       }
     },

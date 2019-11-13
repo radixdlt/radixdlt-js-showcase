@@ -24,7 +24,7 @@ export default Vue.extend({
       columns: [
         {
           field: 'uri',
-          label: 'Token',
+          label: 'Token RRI',
         },
         {
           field: 'balance',

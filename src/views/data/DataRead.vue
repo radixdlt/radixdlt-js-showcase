@@ -2,18 +2,8 @@
   <div class="section">
     <h2 class="title">Read Data</h2>
 
-    <b-field
-      class="filter-box"
-      label="Filter by Application ID"
-      label-position="on-border"
-    >
-      <b-input
-        placeholder="Application ID..."
-        type="search"
-        icon="magnify"
-        v-model="filterValue"
-      >
-      </b-input>
+    <b-field class="filter-box" label="Filter by Application ID" label-position="on-border">
+      <b-input placeholder="Application ID..." type="search" icon="magnify" v-model="filterValue"> </b-input>
     </b-field>
 
     <b-table
@@ -32,20 +22,10 @@
         <b-table-column field="id" label="#" width="5">
           {{ props.row.id }}
         </b-table-column>
-        <b-table-column
-          field="timestamp"
-          label="Timestamp"
-          width="300"
-          sortable
-        >
+        <b-table-column field="timestamp" label="Timestamp" width="300" sortable>
           {{ new Date(props.row.timestamp).toLocaleString() }}
         </b-table-column>
-        <b-table-column
-          field="applicationId"
-          label="Application ID"
-          width="300"
-          sortable
-        >
+        <b-table-column field="applicationId" label="Application ID" width="300" sortable>
           {{ props.row.applicationId }}
         </b-table-column>
         <b-table-column field="payload" label="Payload" width="700">
@@ -56,19 +36,19 @@
       <template slot="detail" slot-scope="props">
         <table class="table" aria-colspan="4">
           <tr>
-            <td class="detail-label">Atom ID</td>
+            <td class="has-text-weight-bold">Atom ID</td>
             <td>{{ props.row.aid }}</td>
           </tr>
           <tr>
-            <td class="detail-label">Encryption state</td>
+            <td class="has-text-weight-bold">Encryption state</td>
             <td>{{ props.row.encrypted }}</td>
           </tr>
           <tr v-if="props.row.isSender">
-            <td class="detail-label">Destination(s)</td>
+            <td class="has-text-weight-bold">Destination(s)</td>
             <td>{{ props.row.to }}</td>
           </tr>
           <tr v-else>
-            <td class="detail-label">Source</td>
+            <td class="has-text-weight-bold">Source</td>
             <td>{{ props.row.from }}</td>
           </tr>
         </table>
@@ -106,9 +86,7 @@ export default Vue.extend({
 
       if (!identity) return [];
 
-      const rawData = identity.account.dataSystem.applicationData
-        .values()
-        .flatMap(a => a.values());
+      const rawData = identity.account.dataSystem.applicationData.values().flatMap(a => a.values());
 
       const formattedData = rawData
         .sort((d1, d2) => d2.timestamp - d1.timestamp)
@@ -121,17 +99,13 @@ export default Vue.extend({
           encrypted: d.payload.decryptionState,
           from: d.payload.from,
           to: d.payload.to.map((a: RadixAddress) => a.toString()).join(',\r\n'),
-          isSender:
-            identity.account.address.toString().trim() ===
-            d.payload.from.toString().trim(),
+          isSender: identity.account.address.toString().trim() === d.payload.from.toString().trim(),
         }));
 
       if (!this.filterValue) return formattedData;
 
       return formattedData.filter(d =>
-        d.applicationId
-          .toLocaleLowerCase()
-          .includes(this.filterValue.toLocaleLowerCase()),
+        d.applicationId.toLocaleLowerCase().includes(this.filterValue.toLocaleLowerCase()),
       );
     },
   },
@@ -139,10 +113,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.detail-label {
-  font-weight: bold;
-}
-
 .filter-box {
   width: 300px;
   float: right;

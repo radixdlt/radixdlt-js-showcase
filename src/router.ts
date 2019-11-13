@@ -23,18 +23,18 @@ export default new Router({
     },
     {
       path: '/send',
-      name: 'Send',
+      name: 'Send Tokens',
       component: Send,
-    },
-    {
-      path: '/data-write',
-      name: 'Write Data',
-      component: DataWrite,
     },
     {
       path: '/data-read',
       name: 'Read Data',
       component: DataRead,
+    },
+    {
+      path: '/data-write',
+      name: 'Write Data',
+      component: DataWrite,
     },
     {
       path: '/about',
