@@ -28,13 +28,34 @@
         <!-- Left sidebar -->
         <div class="column is-2 has-background-light sidebar">
           <aside class="hero is-fullheight-with-navbar">
-            <ul class="menu-list">
-              <li v-for="route in $router.options.routes" :key="route.path">
-                <router-link :to="route">
-                  {{ route.name }}
-                </router-link>
-              </li>
-            </ul>
+            <b-menu>
+                <b-menu-list
+                  v-for="route in $router.options.routes.filter(r => r.name !== 'About')"
+                  :label="route.name"
+                  tag="router-link"
+                  :to="route"
+                >
+                  <b-menu-item
+                    v-for="subRoute in route.children"
+                    :label="subRoute.name"
+                    tag="router-link"
+                    :to="subRoute"
+                    :active="subRoute.name === $route.name"
+                  ></b-menu-item>
+                </b-menu-list>
+              <b-menu-list>
+                <template slot="label">
+                  <span>JS LIBRARY SHOWCASE</span>
+                </template>
+                <b-menu-item
+                    label="About"
+                    icon="information-outline"
+                    tag="router-link"
+                    :to="$router.options.routes.find(r => r.path === '/about')"
+                >
+                </b-menu-item>
+              </b-menu-list>
+            </b-menu>
           </aside>
         </div>
         <!-- Content -->
@@ -118,27 +139,29 @@ export default Vue.extend({
   box-shadow: 0 -1px 0 0 #d4dadf;
 }
 
-.menu-list a {
-  border-radius: 0;
-}
-/*
-.menu-list a.is-active {
-  background-color: white;
-  color: black;
-}
-*/
 .sidebar aside {
   padding: 3rem 0 0 0.5rem;
 }
 
+
+.menu-list a {
+  border-radius: 0;
+}
+/*
+  .menu-list a.is-active {
+    background-color: white;
+    color: black;
+  }
+  */
+
 /deep/ .form {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 /deep/ .form > div {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 /deep/ #footer-row {
