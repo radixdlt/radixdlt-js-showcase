@@ -91,7 +91,7 @@ export default Vue.extend({
       this.iconUrl = '';
     },
     showStatus(message: string, type?: string) {
-      this.$emit('show-notification', message, type);
+      this.$parent.$emit('show-notification', message, type);
     },
     defineToken(tokenConstructor: (...args: any) => RadixTransactionBuilder) {
       tokenConstructor(

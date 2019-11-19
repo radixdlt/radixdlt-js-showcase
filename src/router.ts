@@ -16,12 +16,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/about'
+      redirect: '/about',
     },
     {
       path: '/tokens',
       name: 'Tokens',
-
       children: [
         {
           path: 'create',

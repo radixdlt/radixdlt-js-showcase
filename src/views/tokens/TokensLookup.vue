@@ -61,7 +61,7 @@ export default Vue.extend({
         });
     },
     showStatus(message: string, type?: string) {
-      this.$emit('show-notification', message, type);
+      this.$parent.$emit('show-notification', message, type);
     },
   },
 });
