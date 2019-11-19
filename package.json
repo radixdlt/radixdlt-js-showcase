@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "buefy": "^0.8.6",
+    "bulma-helpers": "^0.3.8",
     "core-js": "^2.6.5",
     "radixdlt": "^2.0.0-beta.1",
     "vue": "^2.6.10",
