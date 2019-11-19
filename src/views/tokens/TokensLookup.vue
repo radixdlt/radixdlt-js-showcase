@@ -1,12 +1,16 @@
 <template>
   <section class="section">
-    <h2 class="title">Lookup Token Information</h2>
-    <b-field class="has-padding-top-30 has-padding-bottom-30">
-      <b-input placeholder="Token RRI" type="search" icon="magnify" expanded v-model="searchValue" />
-      <p class="control">
+    <h2 class="title">Token Loookup</h2>
+
+    <b-field class="columns is-gapless has-padding-top-15 has-padding-bottom-15">
+      <b-field class="column" message="Lookup token definition details">
+        <b-input placeholder="Token RRI" type="search" icon="magnify" v-model="searchValue" class="is-fullwidth " />
+      </b-field>
+      <p class="control column">
         <button class="button is-primary" @click="lookupToken(searchValue)">Search</button>
       </p>
     </b-field>
+
     <token-detail-row label="Name" :content="this.token.name" />
     <token-detail-row label="Symbol" :content="this.token.symbol" />
     <token-detail-row label="Address" :content="this.token.address" />

@@ -1,9 +1,9 @@
 <template>
   <div class="columns subtitle" v-if="content">
-    <div class="column is-2 has-text-weight-light">
+    <div class="column is-2 has-text-weight-semibold">
       {{ this.label }}
     </div>
-    <div class="column is-10 has-text-weight-semibold">
+    <div class="column is-10 has-text-weight-normal">
       {{ this.content }}
     </div>
   </div>
