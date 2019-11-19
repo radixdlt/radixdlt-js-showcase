@@ -14,7 +14,7 @@
       show-detail-icon
     >
       <template slot-scope="props">
-        <b-table-column width="30" e>
+        <b-table-column width="30">
           <div v-if="props.row.iconUrl" class="image is-24x24"><img :src="props.row.iconUrl" alt="" /></div>
         </b-table-column>
         <b-table-column field="symbol" label="Symbol" width="150" sortable>
@@ -70,10 +70,10 @@
       <template slot="detail" slot-scope="props">
         <table class="table" aria-colspan="4">
           <tr>
-            <td class="has-text-weight-bold">Address</td>
-            <td>{{ props.row.address }}</td>
+            <td class="has-text-weight-bold">Token RRI</td>
+            <td>{{ props.row.reference }}</td>
           </tr>
-          <tr v-if="props.row.description">
+          <tr>
             <td class="has-text-weight-bold">Description</td>
             <td>{{ props.row.description }}</td>
           </tr>
@@ -141,26 +141,33 @@ export default Vue.extend({
   },
   methods: {
     mintTokens(reference: string, amount: number) {
-      RadixTransactionBuilder.createMintAtom(this.identity.account, reference, amount)
-        .signAndSubmit(this.identity)
-        .subscribe({
-          next: status => this.showStatus(status),
-          complete: () => this.showStatus('Tokens have been minted', NotificationType.SUCCESS),
-          error: error => this.showStatus(error.message, NotificationType.ERROR),
-        });
+      try {
+        RadixTransactionBuilder.createMintAtom(this.identity.account, reference, amount)
+          .signAndSubmit(this.identity)
+          .subscribe({
+            next: status => this.showStatus(status),
+            complete: () => this.showStatus('Tokens have been minted', NotificationType.SUCCESS),
+            error: error => this.showStatus(error.message, NotificationType.ERROR),
+          });
+      } catch (e) {
+        this.showStatus(e.message, NotificationType.ERROR);
+      }
     },
     burnTokens(reference: string, amount: number) {
-      RadixTransactionBuilder.createBurnAtom(this.identity.account, reference, amount)
-        .signAndSubmit(this.identity)
-        .subscribe({
-          next: status => this.showStatus(status),
-          complete: () => this.showStatus('Tokens have been burned', NotificationType.SUCCESS),
-          error: error => this.showStatus(error.message, NotificationType.ERROR),
-        });
+      try {
+        RadixTransactionBuilder.createBurnAtom(this.identity.account, reference, amount)
+          .signAndSubmit(this.identity)
+          .subscribe({
+            next: status => this.showStatus(status),
+            complete: () => this.showStatus('Tokens have been burned', NotificationType.SUCCESS),
+            error: error => this.showStatus(error.message, NotificationType.ERROR),
+          });
+      } catch (e) {
+        this.showStatus(e.message, NotificationType.ERROR);
+      }
     },
     closeModal() {
-      this.isMintModalOpen = false;
-      this.isBurnModalOpen = false;
+      this.isMintModalOpen = this.isBurnModalOpen = false;
     },
     showStatus(message: string, type?: string) {
       this.$parent.$emit('show-notification', message, type);
