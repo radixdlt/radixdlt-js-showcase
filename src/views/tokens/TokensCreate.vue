@@ -28,11 +28,16 @@
         <b-input v-model="iconUrl"></b-input>
       </b-field>
 
-      <b-field>
+      <b-field label="Issuance type">
         <div id="footer-row">
-          <b-switch v-model="multiIssuance">
-            Multi-issuance
-          </b-switch>
+          <b-field class="radio-group" expanded>
+            <b-radio v-model="multiIssuance" native-value="false">
+              Single-Issuance
+            </b-radio>
+            <b-radio v-model="multiIssuance" native-value="true" class="has-padding-left-10">
+              Multi-Issuance
+            </b-radio>
+          </b-field>
           <div class="glue"></div>
           <b-button @click="handleClear" type="is-secondary">Clear</b-button>
           <b-button
