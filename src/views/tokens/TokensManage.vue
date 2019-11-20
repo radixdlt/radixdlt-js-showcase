@@ -97,6 +97,7 @@ import Vue from 'vue';
 import { RadixIdentity, RadixTransactionBuilder } from 'radixdlt';
 import TokensMintModal from './TokensMintBurnModal.vue';
 import { NotificationType } from '@/constants';
+import Decimal from 'decimal.js';
 
 export default Vue.extend({
   name: 'TokensManage',
@@ -138,9 +139,9 @@ export default Vue.extend({
     },
   },
   methods: {
-    mintTokens(reference: string, amount: number) {
+    mintTokens(reference: string, amount: string) {
       try {
-        RadixTransactionBuilder.createMintAtom(this.identity.account, reference, amount)
+        RadixTransactionBuilder.createMintAtom(this.identity.account, reference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
             next: status => this.showStatus(status),
@@ -151,9 +152,9 @@ export default Vue.extend({
         this.showStatus(e.message, NotificationType.ERROR);
       }
     },
-    burnTokens(reference: string, amount: number) {
+    burnTokens(reference: string, amount: string) {
       try {
-        RadixTransactionBuilder.createBurnAtom(this.identity.account, reference, amount)
+        RadixTransactionBuilder.createBurnAtom(this.identity.account, reference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
             next: status => this.showStatus(status),

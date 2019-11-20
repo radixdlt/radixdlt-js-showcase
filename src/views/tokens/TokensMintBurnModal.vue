@@ -10,7 +10,7 @@
           <b-input :value="RRI" readonly disabled />
         </b-field>
         <b-field label="Amount">
-          <b-input type="number" v-model="amount" step="0.01" required />
+          <b-input type="number" v-model="amount" required :use-html5-validation="false" />
         </b-field>
       </section>
       <footer class="modal-card-foot buttons is-right">
@@ -43,7 +43,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      amount: 0,
+      amount: '0',
     };
   },
   methods: {
