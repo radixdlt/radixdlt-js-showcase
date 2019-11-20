@@ -7,8 +7,6 @@
       :per-page="pageSize"
       ref="table"
       hoverable
-      default-sort="symbol"
-      default-sort-direction="asc"
       detailed
       detail-key="description"
       show-detail-icon
