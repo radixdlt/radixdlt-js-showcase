@@ -33,7 +33,7 @@
               type="is-success"
               class="has-padding-right-30 has-padding-left-30"
               icon-left="leaf"
-              @click="isMintModalOpen = true"
+              @click="openModal(props.row.reference, 'mint')"
             >
               Mint
             </b-button>
@@ -41,25 +41,10 @@
               type="is-danger"
               class="has-padding-right-30 has-padding-left-30"
               icon-left="fire"
-              @click="isBurnModalOpen = true"
+              @click="openModal(props.row.reference, 'burn')"
             >
               Burn
             </b-button>
-            <b-modal
-              :active.sync="isModalOpen"
-              has-modal-card
-              trap-focus
-              aria-role="dialog"
-              aria-modal
-              ref="modalDialog"
-            >
-              <tokens-mint-modal
-                :RRI="props.row.reference"
-                :action="isMintModalOpen ? 'mint' : 'burn'"
-                :mintOrBurnTokens="isMintModalOpen ? mintTokens : burnTokens"
-                :closeModal="closeModal"
-              />
-            </b-modal>
           </div>
           <span v-else></span>
         </b-table-column>
@@ -95,20 +80,15 @@
 <script lang="ts">
 import Vue from 'vue';
 import { RadixIdentity, RadixTransactionBuilder } from 'radixdlt';
-import TokensMintModal from './TokensMintBurnModal.vue';
+import TokensActionModal from './TokensActionModal.vue';
 import { NotificationType } from '@/constants';
 import Decimal from 'decimal.js';
 
 export default Vue.extend({
   name: 'TokensManage',
-  components: {
-    'tokens-mint-modal': TokensMintModal,
-  },
   data() {
     return {
       pageSize: 10,
-      isMintModalOpen: false,
-      isBurnModalOpen: false,
     };
   },
   computed: {
@@ -133,9 +113,6 @@ export default Vue.extend({
         supplyType: td.tokenSupplyType.toString(),
         reference: '/' + td.address + '/' + td.symbol,
       }));
-    },
-    isModalOpen(): boolean {
-      return this.isMintModalOpen || this.isBurnModalOpen;
     },
   },
   methods: {
@@ -165,8 +142,20 @@ export default Vue.extend({
         this.showStatus(e.message, NotificationType.ERROR);
       }
     },
-    closeModal() {
-      this.isMintModalOpen = this.isBurnModalOpen = false;
+    openModal(reference: string, action: string) {
+      this.$buefy.modal.open({
+        parent: this,
+        component: TokensActionModal,
+        hasModalCard: true,
+        trapFocus: true,
+        ariaModal: true,
+        ariaRole: 'dialog',
+        props: {
+          tokenRRI: reference,
+          tokenAction: action,
+          tokenActionCallback: action === 'mint' ? this.mintTokens : this.burnTokens,
+        },
+      });
     },
     showStatus(message: string, type?: string) {
       this.$parent.$emit('show-notification', message, type);
