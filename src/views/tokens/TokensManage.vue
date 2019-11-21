@@ -2,8 +2,8 @@
   <section class="section">
     <h2 class="title">Manage Tokens</h2>
     <b-table
-      :data="tokenDefinitions"
-      :paginated="tokenDefinitions.length > pageSize"
+      :data="tokenDefinitionsData"
+      :paginated="tokenDefinitions.size > pageSize"
       :per-page="pageSize"
       ref="table"
       hoverable
@@ -22,18 +22,18 @@
           {{ props.row.name }}
         </b-table-column>
         <b-table-column field="granularity" label="Granularity">
-          {{ props.row.granularity }}
+          {{ props.row.getTokenUnitsGranularity() }}
         </b-table-column>
         <b-table-column field="supply" label="Supply">
-          {{ props.row.supply }}
+          {{ props.row.getTokenUnitsTotalSupply() }}
         </b-table-column>
         <b-table-column label="Actions">
-          <div class="buttons" v-if="props.row.supplyType === 'mutable'">
+          <div class="buttons" v-if="props.row.tokenSupplyType === 'mutable'">
             <b-button
               type="is-success"
               class="has-padding-right-30 has-padding-left-30"
               icon-left="leaf"
-              @click="openModal(props.row.reference, 'mint')"
+              @click="openModal(getTokenRRI(props.row), 'mint')"
             >
               Mint
             </b-button>
@@ -41,7 +41,7 @@
               type="is-danger"
               class="has-padding-right-30 has-padding-left-30"
               icon-left="fire"
-              @click="openModal(props.row.reference, 'burn')"
+              @click="openModal(getTokenRRI(props.row), 'burn')"
             >
               Burn
             </b-button>
@@ -54,7 +54,7 @@
         <table class="table" aria-colspan="4">
           <tr>
             <td class="has-text-weight-bold">Token RRI</td>
-            <td>{{ props.row.reference }}</td>
+            <td>{{ getTokenRRI(props.row) }}</td>
           </tr>
           <tr>
             <td class="has-text-weight-bold">Description</td>
@@ -79,46 +79,56 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { RadixIdentity, RadixTransactionBuilder } from 'radixdlt';
+import { RadixIdentity, RadixTokenDefinition, RadixTransactionBuilder } from 'radixdlt';
 import TokensActionModal from './TokensActionModal.vue';
 import { NotificationType } from '@/constants';
 import Decimal from 'decimal.js';
+import { Subscription } from 'rxjs';
 
 export default Vue.extend({
   name: 'TokensManage',
   data() {
     return {
       pageSize: 10,
+      tokenDefinitions: new Map<String, RadixTokenDefinition>(),
+      tokenUpdatesSubscription: {} as Subscription,
+      tokenUpdatesTracker: 1,
     };
+  },
+  created() {
+    this.loadTokenDefinitions();
+    this.subscribeToUpdates();
+  },
+  beforeDestroy() {
+    this.tokenUpdatesSubscription.unsubscribe();
   },
   computed: {
     identity(): RadixIdentity {
       return this.$store.state.identity;
     },
-    tokenDefinitions(): Array<{}> {
-      const identity: RadixIdentity = this.$store.state.identity;
-
-      if (!identity) return [];
-
-      const tokenDefinitions = identity.account.tokenDefinitionSystem.tokenDefinitions;
-
-      return tokenDefinitions.values().map(td => ({
-        symbol: td.symbol,
-        name: td.name,
-        granularity: td.getTokenUnitsGranularity().toString(),
-        supply: td.getTokenUnitsTotalSupply(),
-        address: td.address,
-        description: td.description,
-        iconUrl: td.iconUrl,
-        supplyType: td.tokenSupplyType.toString(),
-        reference: '/' + td.address + '/' + td.symbol,
-      }));
+    tokenDefinitionsData(): any {
+      return this.tokenUpdatesTracker && Array.from(this.tokenDefinitions.values());
     },
   },
   methods: {
-    mintTokens(reference: string, amount: string) {
+    loadTokenDefinitions() {
+      if (!this.identity) return;
+
+      this.identity.account.tokenDefinitionSystem.tokenDefinitions
+        .values()
+        .map(td => this.tokenDefinitions.set(this.getTokenRRI(td), td));
+    },
+    subscribeToUpdates() {
+      this.tokenUpdatesSubscription = this.identity.account.tokenDefinitionSystem
+        .getAllTokenDefinitionObservable()
+        .subscribe(td => {
+          this.tokenDefinitions.set(this.getTokenRRI(td), td);
+          this.tokenUpdatesTracker += 1;
+        });
+    },
+    mintTokens(tokenReference: string, amount: string) {
       try {
-        RadixTransactionBuilder.createMintAtom(this.identity.account, reference, new Decimal(amount))
+        RadixTransactionBuilder.createMintAtom(this.identity.account, tokenReference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
             next: status => this.showStatus(status),
@@ -129,9 +139,9 @@ export default Vue.extend({
         this.showStatus(e.message, NotificationType.ERROR);
       }
     },
-    burnTokens(reference: string, amount: string) {
+    burnTokens(tokenReference: string, amount: string) {
       try {
-        RadixTransactionBuilder.createBurnAtom(this.identity.account, reference, new Decimal(amount))
+        RadixTransactionBuilder.createBurnAtom(this.identity.account, tokenReference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
             next: status => this.showStatus(status),
@@ -142,7 +152,10 @@ export default Vue.extend({
         this.showStatus(e.message, NotificationType.ERROR);
       }
     },
-    openModal(reference: string, action: string) {
+    getTokenRRI(td: RadixTokenDefinition) {
+      return '/' + td.address + '/' + td.symbol;
+    },
+    openModal(tokenReference: string, action: string) {
       this.$buefy.modal.open({
         parent: this,
         component: TokensActionModal,
@@ -151,7 +164,7 @@ export default Vue.extend({
         ariaModal: true,
         ariaRole: 'dialog',
         props: {
-          tokenRRI: reference,
+          tokenRRI: tokenReference,
           tokenAction: action,
           tokenActionCallback: action === 'mint' ? this.mintTokens : this.burnTokens,
         },
