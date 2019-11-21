@@ -96,11 +96,21 @@ export default Vue.extend({
     };
   },
   created() {
-    this.loadTokenDefinitions();
-    this.subscribeToUpdates();
+    if (this.identity) {
+      this.loadTokenDefinitions();
+      this.subscribeToUpdates();
+    }
   },
   beforeDestroy() {
     this.tokenUpdatesSubscription.unsubscribe();
+  },
+  watch: {
+    identity(newValue, oldValue) {
+      if (newValue) {
+        this.loadTokenDefinitions();
+        this.subscribeToUpdates();
+      }
+    },
   },
   computed: {
     identity(): RadixIdentity {
@@ -112,8 +122,6 @@ export default Vue.extend({
   },
   methods: {
     loadTokenDefinitions() {
-      if (!this.identity) return;
-
       this.identity.account.tokenDefinitionSystem.tokenDefinitions
         .values()
         .map(td => this.tokenDefinitions.set(this.getTokenRRI(td), td));
