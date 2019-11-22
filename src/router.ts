@@ -5,6 +5,9 @@ import Transactions from './views/wallet/Transactions.vue';
 import Send from './views/wallet/Send.vue';
 import DataWrite from './views/data/DataWrite.vue';
 import DataRead from './views/data/DataRead.vue';
+import TokensCreate from '@/views/tokens/TokensCreate.vue';
+import TokensManage from '@/views/tokens/TokensManage.vue';
+import TokensLookup from '@/views/tokens/TokensLookup.vue';
 
 Vue.use(Router);
 
@@ -13,28 +16,68 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Balance',
-      component: Balance,
+      redirect: '/about',
     },
     {
-      path: '/transactions',
-      name: 'Transactions',
-      component: Transactions,
+      path: '/tokens',
+      name: 'Tokens',
+      children: [
+        {
+          path: 'create',
+          name: 'Create',
+          component: TokensCreate,
+        },
+        {
+          path: 'manage',
+          name: 'Manage',
+          component: TokensManage,
+        },
+        {
+          path: 'lookup',
+          name: 'Lookup',
+          component: TokensLookup,
+        },
+      ],
+      component: { render: c => c('router-view') },
     },
     {
-      path: '/send',
-      name: 'Send Tokens',
-      component: Send,
+      path: '/wallet',
+      name: 'Wallet',
+      children: [
+        {
+          path: 'balance',
+          name: 'Balance',
+          component: Balance,
+        },
+        {
+          path: 'transactions',
+          name: 'Transactions',
+          component: Transactions,
+        },
+        {
+          path: 'send-tokens',
+          name: 'Send tokens',
+          component: Send,
+        },
+      ],
+      component: { render: c => c('router-view') },
     },
     {
-      path: '/data-read',
-      name: 'Read Data',
-      component: DataRead,
-    },
-    {
-      path: '/data-write',
-      name: 'Write Data',
-      component: DataWrite,
+      path: '/data',
+      name: 'Data',
+      children: [
+        {
+          path: 'read',
+          name: 'Read',
+          component: DataRead,
+        },
+        {
+          path: 'write',
+          name: 'Write',
+          component: DataWrite,
+        },
+      ],
+      component: { render: c => c('router-view') },
     },
     {
       path: '/about',
