@@ -129,11 +129,7 @@ export default Vue.extend({
         });
     },
     validateAmount(): boolean {
-      return new Decimal(this.amount)
-        .times(100)
-        .modulo(new Decimal(this.granularity).times(100))
-        .dividedBy(100)
-        .isZero();
+      return new Decimal(this.amount).mod(new Decimal(this.granularity)).isZero();
     },
   },
 });
