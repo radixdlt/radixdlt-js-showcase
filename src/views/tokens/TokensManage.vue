@@ -80,10 +80,10 @@
 <script lang="ts">
 import Vue from 'vue';
 import { RadixIdentity, RadixTokenDefinition, RadixTransactionBuilder } from 'radixdlt';
-import TokensActionModal from './TokensActionModal.vue';
-import { NotificationType } from '@/constants';
-import Decimal from 'decimal.js';
 import { Subscription } from 'rxjs';
+import Decimal from 'decimal.js';
+import TokensActionModal from '@/views/tokens/TokensActionModal.vue';
+import { NotificationType } from '@/constants';
 
 export default Vue.extend({
   name: 'TokensManage',

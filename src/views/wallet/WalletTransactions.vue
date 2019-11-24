@@ -49,7 +49,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import { RadixTransactionUpdate, RadixTransaction, RRI, RadixIdentity } from 'radixdlt';
+import { RadixTransactionUpdate, RadixTransaction, RRI } from 'radixdlt';
 import { Subscription } from 'rxjs';
 
 export default Vue.extend({
