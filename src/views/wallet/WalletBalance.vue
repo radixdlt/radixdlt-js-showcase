@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import Decimal from 'decimal.js';
 
 export default Vue.extend({
+  name: 'WalletBalance',
   data() {
     return {
       balance: [] as Array<{
@@ -35,7 +36,6 @@ export default Vue.extend({
       balanceSubscription: null as (Subscription | null),
     };
   },
-  name: 'balance',
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();

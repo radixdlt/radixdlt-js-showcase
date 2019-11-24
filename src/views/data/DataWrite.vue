@@ -39,6 +39,7 @@ import { RadixTransactionBuilder, RadixAccount, RadixIdentity } from 'radixdlt';
 import { NotificationType } from '@/constants';
 
 export default Vue.extend({
+  name: 'DataWrite',
   data() {
     return {
       address: '',
@@ -47,7 +48,6 @@ export default Vue.extend({
       encrypted: false,
     };
   },
-  name: 'write_data',
   computed: {
     identity(): RadixIdentity {
       return this.$store.state.identity;

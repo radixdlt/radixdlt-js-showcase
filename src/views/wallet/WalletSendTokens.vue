@@ -44,6 +44,7 @@ import Decimal from 'decimal.js';
 import { NotificationType } from '@/constants';
 
 export default Vue.extend({
+  name: 'WalletSendTokens',
   data() {
     return {
       tokens: {} as { [uri: string]: Decimal },
@@ -56,7 +57,6 @@ export default Vue.extend({
       balanceSubscription: null as (Subscription | null),
     };
   },
-  name: 'send',
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();

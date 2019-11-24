@@ -2,7 +2,7 @@
   <b-menu class="has-padding-left-10">
     <div class="has-padding-left-5 has-padding-bottom-50">
       <a href="https://radixdlt.com">
-        <img src="./assets/radix-logo.svg" alt="Radix Logo" height="35" style="max-height: 35px" />
+        <img src="../assets/radix-logo.svg" alt="Radix Logo" height="35" style="max-height: 35px" />
       </a>
     </div>
     <b-menu-list

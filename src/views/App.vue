@@ -25,8 +25,8 @@ import Vue from 'vue';
 import { radixUniverse, RadixUniverse } from 'radixdlt';
 import { NotificationType } from '@/constants';
 
-import AppSidebar from '@/AppSidebar.vue';
-import AppHeader from '@/AppHeader.vue';
+import AppSidebar from '@/views/AppSidebar.vue';
+import AppHeader from '@/views/AppHeader.vue';
 
 const toasts = [] as any;
 

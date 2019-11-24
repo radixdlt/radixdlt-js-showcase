@@ -53,6 +53,7 @@ import { RadixTransactionUpdate, RadixTransaction, RRI, RadixIdentity } from 'ra
 import { Subscription } from 'rxjs';
 
 export default Vue.extend({
+  name: 'WalletTransactions',
   data() {
     return {
       transactions: [] as Array<{
@@ -66,7 +67,6 @@ export default Vue.extend({
       transactionSubscription: null as (Subscription | null),
     };
   },
-  name: 'transactions',
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();
