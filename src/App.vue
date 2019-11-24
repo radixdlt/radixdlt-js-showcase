@@ -1,69 +1,20 @@
 <template>
   <div id="app">
-    <!-- Header -->
-    <div class="is-vertical">
-      <header class="hero app-header">
-        <div class="navbar">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <img src="./assets/radix-logo.svg" alt="Radix Logo" />
-            </div>
-          </div>
-          <div class="navbar-menu">
-            <div class="navbar-end">
-              <div class="navbar-item has-dropdown is-hoverable" v-if="identity">
-                <a class="navbar-link"> My address: {{ identity.address.toString() }} </a>
-
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" @click="generateIdentity()">
-                    Generate a new address
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-      <div class="columns is-gapless app-body">
-        <!-- Left sidebar -->
-        <div class="column is-2 has-background-light sidebar">
-          <aside class="hero is-fullheight-with-navbar">
-            <b-menu>
-                <b-menu-list
-                  v-for="route in $router.options.routes.filter(r => r.name !== 'About')"
-                  :label="route.name"
-                  tag="router-link"
-                  :to="route"
-                >
-                  <b-menu-item
-                    v-for="subRoute in route.children"
-                    :label="subRoute.name"
-                    tag="router-link"
-                    :to="subRoute"
-                    :active="subRoute.name === $route.name"
-                  ></b-menu-item>
-                </b-menu-list>
-              <b-menu-list>
-                <template slot="label">
-                  <span>JS LIBRARY SHOWCASE</span>
-                </template>
-                <b-menu-item
-                    label="About"
-                    icon="information-outline"
-                    tag="router-link"
-                    :to="$router.options.routes.find(r => r.path === '/about')"
-                >
-                </b-menu-item>
-              </b-menu-list>
-            </b-menu>
-          </aside>
-        </div>
-        <!-- Content -->
-        <div class="column is-10">
-          <main>
-            <router-view @show-notification="handleNotification" />
-          </main>
-        </div>
+    <div class="columns is-gapless">
+      <!-- Sidebar -->
+      <div class="column is-2 has-background-light sidebar">
+        <aside class="hero is-fullheight">
+          <app-sidebar />
+        </aside>
+      </div>
+      <!-- Content -->
+      <div class="column is-10">
+        <header>
+          <app-header @show-notification="handleNotification" />
+        </header>
+        <main>
+          <router-view @show-notification="handleNotification" />
+        </main>
       </div>
     </div>
   </div>
@@ -71,46 +22,24 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
-import { radixUniverse, RadixUniverse, RadixIdentityManager, RadixKeyStore } from 'radixdlt';
+import { radixUniverse, RadixUniverse } from 'radixdlt';
 import { NotificationType } from '@/constants';
+
+import AppSidebar from '@/AppSidebar.vue';
+import AppHeader from '@/AppHeader.vue';
 
 const toasts = [] as any;
 
 export default Vue.extend({
-  data() {
-    return {
-      identityManager: new RadixIdentityManager(),
-      keyStoreKey: 'radixKeyStore',
-      keyStorePassword: 'SuperSecretPassword', // In a real application, this would be set by the user
-    };
+  name: 'App',
+  components: {
+    'app-header': AppHeader,
+    'app-sidebar': AppSidebar,
   },
-  computed: mapState(['identity']),
   created() {
     radixUniverse.bootstrap(RadixUniverse.BETANET_EMULATOR);
-    this.loadIdentity();
   },
   methods: {
-    loadIdentity() {
-      const keyStoreJSON = localStorage.getItem(this.keyStoreKey);
-      if (keyStoreJSON) {
-        return RadixKeyStore.decryptKey(JSON.parse(keyStoreJSON), this.keyStorePassword).then(address => {
-          const identity = this.identityManager.addSimpleIdentity(address);
-          identity.account.openNodeConnection();
-          this.$store.commit('setIdentity', identity);
-        });
-      }
-
-      return this.generateIdentity();
-    },
-    generateIdentity() {
-      const identity = this.identityManager.generateSimpleIdentity();
-      identity.account.openNodeConnection();
-      this.$store.commit('setIdentity', identity);
-      return RadixKeyStore.encryptKey(identity.address, this.keyStorePassword).then(keyStore => {
-        localStorage.setItem(this.keyStoreKey, JSON.stringify(keyStore));
-      });
-    },
     handleNotification(message: string, type: string = NotificationType.DEFAULT) {
       if (toasts.length > 0) {
         const previousToast = toasts[toasts.length - 1];
@@ -131,28 +60,18 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.app-header {
-  box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
-}
-
 .app-body {
-  box-shadow: 0 -1px 0 0 #d4dadf;
+  box-shadow: 0 -1px 0 0 black;
 }
 
 .sidebar aside {
-  padding: 3rem 0 0 0.5rem;
+  padding: 0.5rem 0 0 0.5rem;
 }
 
-
-.menu-list a {
-  border-radius: 0;
+/deep/ .section {
+  margin-right: 30px;
+  margin-left: 30px;
 }
-/*
-  .menu-list a.is-active {
-    background-color: white;
-    color: black;
-  }
-  */
 
 /deep/ .form {
   display: flex;
@@ -160,8 +79,8 @@ export default Vue.extend({
   margin-top: 40px;
 }
 
-/deep/ .form > div {
-  padding-top: 5px;
+/deep/ .form label {
+  padding-top: 10px;
 }
 
 /deep/ #footer-row {
