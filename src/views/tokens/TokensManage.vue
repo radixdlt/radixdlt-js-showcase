@@ -90,7 +90,7 @@ export default Vue.extend({
   data() {
     return {
       pageSize: 10,
-      tokenDefinitions: new Map<String, RadixTokenDefinition>(),
+      tokenDefinitions: new Map<string, RadixTokenDefinition>(),
       tokenUpdatesSubscription: {} as Subscription,
       tokenUpdatesTracker: 1,
     };
@@ -106,10 +106,8 @@ export default Vue.extend({
   },
   watch: {
     identity(newValue, oldValue) {
-      if (newValue) {
-        this.loadTokenDefinitions();
-        this.subscribeToUpdates();
-      }
+      this.loadTokenDefinitions();
+      this.subscribeToUpdates();
     },
   },
   computed: {
