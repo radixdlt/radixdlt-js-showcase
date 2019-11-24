@@ -53,13 +53,15 @@ export default Vue.extend({
       token: radixUniverse.nativeToken.toString(),
       reference: '',
       status: '',
-
-      balanceSubscription: null as (Subscription | null),
+      balanceSubscription: Subscription.EMPTY as Subscription,
     };
   },
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();
+  },
+  beforeDestroy() {
+    this.balanceSubscription.unsubscribe();
   },
   watch: {
     identity(newValue, oldValue) {
@@ -69,10 +71,6 @@ export default Vue.extend({
   methods: {
     updateSubscription() {
       if (this.identity) {
-        if (this.balanceSubscription) {
-          this.balanceSubscription.unsubscribe();
-        }
-
         this.balanceSubscription = this.identity.account.transferSystem
           .getTokenUnitsBalanceUpdates()
           .subscribe((balance: { [tokenUri: string]: Decimal }) => {

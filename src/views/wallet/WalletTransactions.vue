@@ -64,12 +64,15 @@ export default Vue.extend({
         aid: string;
       }>,
       pageSize: 10,
-      transactionSubscription: null as (Subscription | null),
+      transactionSubscription: Subscription.EMPTY as Subscription,
     };
   },
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();
+  },
+  beforeDestroy() {
+    this.transactionSubscription.unsubscribe();
   },
   watch: {
     identity(newValue, oldValue) {
@@ -79,10 +82,6 @@ export default Vue.extend({
   methods: {
     updateSubscription() {
       if (this.identity) {
-        if (this.transactionSubscription) {
-          this.transactionSubscription.unsubscribe();
-        }
-
         this.updateTransactionList(this.identity.account.transferSystem.transactions.values());
 
         this.transactionSubscription = this.identity.account.transferSystem

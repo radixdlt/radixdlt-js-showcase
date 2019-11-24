@@ -91,7 +91,7 @@ export default Vue.extend({
     return {
       pageSize: 10,
       tokenDefinitions: new Map<string, RadixTokenDefinition>(),
-      tokenUpdatesSubscription: {} as Subscription,
+      tokenUpdatesSubscription: Subscription.EMPTY as Subscription,
       tokenUpdatesTracker: 1,
     };
   },
