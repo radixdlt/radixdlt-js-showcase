@@ -1,20 +1,20 @@
 <template>
   <div class="section" v-if="identity">
     <h2 class="title">Write Data</h2>
-    <section class="form">
-      <b-field horizontal label="Source address" type="is-dark has-background-light">
+    <div class="form">
+      <b-field label="Source address" type="is-dark has-background-light">
         <b-input :value="identity.address.toString()" readonly></b-input>
       </b-field>
-      <b-field horizontal label="Destination address">
+      <b-field label="Destination address">
         <b-input v-model="address"></b-input>
       </b-field>
-      <b-field horizontal label="Application ID">
+      <b-field label="Application ID">
         <b-input v-model="applicationId"></b-input>
       </b-field>
-      <b-field horizontal label="Payload">
+      <b-field label="Payload">
         <b-input type="textarea" placeholder="" v-model="payload"></b-input>
       </b-field>
-      <b-field horizontal>
+      <b-field>
         <div id="footer-row">
           <b-switch v-model="encrypted">
             Encrypt
@@ -29,7 +29,7 @@
           </b-button>
         </div>
       </b-field>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -86,4 +86,3 @@ export default Vue.extend({
   },
 });
 </script>
-

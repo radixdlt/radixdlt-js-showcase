@@ -1,27 +1,27 @@
 <template>
   <div class="section" v-if="identity">
     <h2 class="title">Send Tokens</h2>
-    <section class="form">
-      <b-field horizontal label="Source address" type="is-dark has-background-light">
+    <div class="form">
+      <b-field label="Source address" type="is-dark has-background-light">
         <b-input :value="identity.address.toString()" readonly></b-input>
       </b-field>
 
-      <b-field horizontal label="Destination address">
+      <b-field label="Destination address">
         <b-input v-model="address"></b-input>
       </b-field>
 
-      <b-field horizontal label="Reference">
+      <b-field label="Reference">
         <b-input v-model="reference"></b-input>
       </b-field>
 
-      <b-field horizontal label="Token RRI">
+      <b-field label="Token RRI">
         <b-select v-model="token" placeholder="Token" expanded>
           <option v-for="(balance, token) in tokens" :value="token" :key="token">
             {{ token }}
           </option>
         </b-select>
       </b-field>
-      <b-field horizontal label="Amount">
+      <b-field label="Amount">
         <div id="footer-row">
           <b-field :message="getBalance()">
             <b-input type="number" min="0" step="any" v-model="amount" expanded :disabled="!token"></b-input>
@@ -31,7 +31,7 @@
           <b-button @click="send" type="is-primary" :disabled="tokens[token].lt(amount || 0)">Send</b-button>
         </div>
       </b-field>
-    </section>
+    </div>
   </div>
 </template>
 
