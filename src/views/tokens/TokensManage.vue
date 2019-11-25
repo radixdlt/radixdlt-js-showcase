@@ -80,18 +80,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import { RadixIdentity, RadixTokenDefinition, RadixTransactionBuilder } from 'radixdlt';
-import TokensActionModal from './TokensActionModal.vue';
-import { NotificationType } from '@/constants';
-import Decimal from 'decimal.js';
 import { Subscription } from 'rxjs';
+import Decimal from 'decimal.js';
+import TokensActionModal from '@/views/tokens/TokensActionModal.vue';
+import { NotificationType } from '@/constants';
 
 export default Vue.extend({
   name: 'TokensManage',
   data() {
     return {
       pageSize: 10,
-      tokenDefinitions: new Map<String, RadixTokenDefinition>(),
-      tokenUpdatesSubscription: {} as Subscription,
+      tokenDefinitions: new Map<string, RadixTokenDefinition>(),
+      tokenUpdatesSubscription: Subscription.EMPTY as Subscription,
       tokenUpdatesTracker: 1,
     };
   },
@@ -106,10 +106,8 @@ export default Vue.extend({
   },
   watch: {
     identity(newValue, oldValue) {
-      if (newValue) {
-        this.loadTokenDefinitions();
-        this.subscribeToUpdates();
-      }
+      this.loadTokenDefinitions();
+      this.subscribeToUpdates();
     },
   },
   computed: {

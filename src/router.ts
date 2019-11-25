@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Balance from './views/wallet/Balance.vue';
-import Transactions from './views/wallet/Transactions.vue';
-import Send from './views/wallet/Send.vue';
-import DataWrite from './views/data/DataWrite.vue';
-import DataRead from './views/data/DataRead.vue';
+import Balance from '@/views/wallet/WalletBalance.vue';
+import Transactions from '@/views/wallet/WalletTransactions.vue';
+import Send from '@/views/wallet/WalletSendTokens.vue';
+import DataWrite from '@/views/data/DataWrite.vue';
+import DataRead from '@/views/data/DataRead.vue';
 import TokensCreate from '@/views/tokens/TokensCreate.vue';
 import TokensManage from '@/views/tokens/TokensManage.vue';
 import TokensLookup from '@/views/tokens/TokensLookup.vue';
@@ -85,7 +85,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/about/About.vue'),
     },
   ],
 });

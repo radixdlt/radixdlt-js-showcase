@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { RadixIdentity, radixTokenManager } from 'radixdlt';
+import { radixTokenManager } from 'radixdlt';
 import { NotificationType } from '@/constants';
 import TokensLookupDetailRow from '@/views/tokens/TokensLookupDetailRow.vue';
 

@@ -1,9 +1,9 @@
-@import '~bulma/sass/utilities/_all';
+@import '~bulma/sass/utilities/all';
 
-$primary: #24B47E;
+$primary: #32364E;
 $primary-invert: findColorInvert($primary);
-$success: #32364E;
-$success-invert: findColorInvert($dark);
+$success: #24B47E;
+$success-invert: findColorInvert($success);
 
 $colors: (
   "white": ($white, $black),
@@ -11,15 +11,15 @@ $colors: (
   "light": ($light, $light-invert),
   "dark": ($dark, $dark-invert),
   "primary": ($primary, $primary-invert),
-  "info": ($info, $info-invert),
+  "info": (lighten($primary, 25), $info-invert),
   "success": ($success, $success-invert),
   "warning": ($warning, $warning-invert),
   "danger": ($danger, $danger-invert),
 );
 
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;
+$link: $success;
+$link-invert: $success-invert;
+$link-focus-border: $success;
 
 @import '~bulma';
 @import '~buefy/src/scss/buefy';

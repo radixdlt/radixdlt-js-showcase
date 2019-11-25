@@ -73,13 +73,13 @@ import Vue from 'vue';
 import { RadixIdentity, RadixAddress } from 'radixdlt';
 
 export default Vue.extend({
+  name: 'DataRead',
   data() {
     return {
       pageSize: 10,
       filterValue: '',
     };
   },
-  name: 'read_data',
   computed: {
     applicationData(): Array<{}> {
       const identity: RadixIdentity = this.$store.state.identity;

@@ -49,10 +49,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import { RadixTransactionUpdate, RadixTransaction, RRI, RadixIdentity } from 'radixdlt';
+import { RadixTransactionUpdate, RadixTransaction, RRI } from 'radixdlt';
 import { Subscription } from 'rxjs';
 
 export default Vue.extend({
+  name: 'WalletTransactions',
   data() {
     return {
       transactions: [] as Array<{
@@ -63,13 +64,15 @@ export default Vue.extend({
         aid: string;
       }>,
       pageSize: 10,
-      transactionSubscription: null as (Subscription | null),
+      transactionSubscription: Subscription.EMPTY as Subscription,
     };
   },
-  name: 'transactions',
   computed: mapState(['identity']),
   created() {
     this.updateSubscription();
+  },
+  beforeDestroy() {
+    this.transactionSubscription.unsubscribe();
   },
   watch: {
     identity(newValue, oldValue) {
@@ -79,10 +82,6 @@ export default Vue.extend({
   methods: {
     updateSubscription() {
       if (this.identity) {
-        if (this.transactionSubscription) {
-          this.transactionSubscription.unsubscribe();
-        }
-
         this.updateTransactionList(this.identity.account.transferSystem.transactions.values());
 
         this.transactionSubscription = this.identity.account.transferSystem
