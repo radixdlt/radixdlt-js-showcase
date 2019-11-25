@@ -139,9 +139,10 @@ export default Vue.extend({
     confirmIdentityRandom() {
       this.$buefy.dialog.confirm({
         title: 'Random Identity',
-        message:
-          'Proceeding will create a new Radix Identity which will overwrite the current one. ' +
-          'Export the current one if you want to use it later. ',
+        message: `Proceeding will create a new Radix Identity.
+                  <br/><br/>
+                  <b>Note: </b> This will overwrite your current identity. 
+                  Make sure you export it first if you want to use it later. `,
         cancelText: 'Cancel',
         confirmText: 'Proceed',
         type: 'is-primary',
@@ -155,7 +156,9 @@ export default Vue.extend({
     confirmIdentityRemote() {
       this.$buefy.dialog.confirm({
         title: 'Remote Identity',
-        message: `Proceeding will attempt to connect to your Desktop Wallet's Identity`,
+        message: `Proceeding will attempt to connect to your Desktop Wallet's Identity.
+                  <br/><br/>
+                  <b>Note: </b>Make sure you have the Wallet open and approve the incoming request.`,
         cancelText: 'Cancel',
         confirmText: 'Proceed',
         type: 'is-primary',
@@ -175,7 +178,7 @@ export default Vue.extend({
         type: 'is-primary',
         trapFocus: true,
         inputAttrs: {
-          type: 'text-area',
+          type: 'textarea',
           size: 51,
         },
         onConfirm: keyStore => this.confirmIdentityImportTwo(keyStore),
@@ -220,8 +223,9 @@ export default Vue.extend({
 
       this.$buefy.dialog.alert({
         title: 'Export Identity',
-        message: `<p class="is-full-width">Save the following JSON keystore for later use:<br/><br/>
-                  <pre>${JSON.stringify(keyStore, null, 2)}</pre></p>`,
+        message: `Save the following JSON keystore for later use:
+                  <br/><br/>
+                  <pre>${JSON.stringify(keyStore, null, 2)}</pre>`,
         confirmText: 'OK',
         type: 'is-primary',
         trapFocus: true,
