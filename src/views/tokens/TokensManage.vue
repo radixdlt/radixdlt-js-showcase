@@ -82,7 +82,7 @@ import Vue from 'vue';
 import { RadixIdentity, RadixTokenDefinition, RadixTransactionBuilder } from 'radixdlt';
 import { Subscription } from 'rxjs';
 import Decimal from 'decimal.js';
-import TokensActionModal from '@/views/tokens/TokensActionModal.vue';
+import TokensManageActionModal from '@/views/tokens/TokensManageModal.vue';
 import { NotificationType } from '@/constants';
 
 export default Vue.extend({
@@ -164,7 +164,7 @@ export default Vue.extend({
     openModal(tokenReference: string, action: string) {
       this.$buefy.modal.open({
         parent: this,
-        component: TokensActionModal,
+        component: TokensManageActionModal,
         hasModalCard: true,
         trapFocus: true,
         ariaModal: true,
