@@ -42,6 +42,17 @@
           </tr>
         </table>
       </template>
+
+      <template slot="empty">
+        <section class="section">
+          <div class="content has-text-grey has-text-centered">
+            <p>
+              <b-icon icon="emoticon-sad" size="is-large" />
+            </p>
+            <p>No data.</p>
+          </div>
+        </section>
+      </template>
     </b-table>
   </div>
 </template>
