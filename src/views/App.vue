@@ -63,10 +63,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.app-body {
-  box-shadow: 0 -1px 0 0 black;
-}
-
 .sidebar aside {
   padding: 0.5rem 0 0 0.5rem;
 }
