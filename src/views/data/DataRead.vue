@@ -55,14 +55,7 @@
       </template>
 
       <template slot="empty">
-        <section class="section">
-          <div class="content has-text-grey has-text-centered">
-            <p>
-              <b-icon icon="emoticon-sad" size="is-large" />
-            </p>
-            <p>No data.</p>
-          </div>
-        </section>
+        <table-empty />
       </template>
     </b-table>
   </div>
@@ -71,9 +64,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { RadixIdentity, RadixAddress } from 'radixdlt';
+import TableEmpty from '@/views/shared/TableEmpty.vue';
 
 export default Vue.extend({
   name: 'DataRead',
+  components: {
+    'table-empty': TableEmpty,
+  },
   data() {
     return {
       pageSize: 10,

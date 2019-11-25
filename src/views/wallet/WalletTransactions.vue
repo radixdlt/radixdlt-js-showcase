@@ -44,14 +44,7 @@
       </template>
 
       <template slot="empty">
-        <section class="section">
-          <div class="content has-text-grey has-text-centered">
-            <p>
-              <b-icon icon="emoticon-sad" size="is-large" />
-            </p>
-            <p>No data.</p>
-          </div>
-        </section>
+        <table-empty />
       </template>
     </b-table>
   </div>
@@ -62,9 +55,13 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import { RadixTransactionUpdate, RadixTransaction, RRI } from 'radixdlt';
 import { Subscription } from 'rxjs';
+import TableEmpty from '@/views/shared/TableEmpty.vue';
 
 export default Vue.extend({
   name: 'WalletTransactions',
+  components: {
+    'table-empty': TableEmpty,
+  },
   data() {
     return {
       transactions: [] as Array<{
