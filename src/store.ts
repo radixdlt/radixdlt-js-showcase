@@ -8,9 +8,8 @@ export default new Vuex.Store({
     identity: null,
   },
   mutations: {
-    setIdentity(state, newIdentity) {
+    setIdentity(state, newIdentity): void {
       state.identity = newIdentity;
     },
   },
-  actions: {},
 });
