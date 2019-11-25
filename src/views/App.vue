@@ -39,6 +39,9 @@ export default Vue.extend({
   created() {
     radixUniverse.bootstrap(RadixUniverse.BETANET_EMULATOR);
   },
+  beforeDestroy() {
+    radixUniverse.closeAllConnections();
+  },
   methods: {
     handleNotification(message: string, type: string = NotificationType.DEFAULT) {
       if (toasts.length > 0) {
