@@ -75,9 +75,9 @@ import Vue from 'vue';
 import { RadixIdentity, RadixTokenDefinition, RadixTransactionBuilder } from 'radixdlt';
 import { Subscription } from 'rxjs';
 import Decimal from 'decimal.js';
-import TokensManageActionModal from '@/views/tokens/TokensManageModal.vue';
+import TokensManageActionModal from '@/components/tokens/TokensManageModal.vue';
 import { NotificationType } from '@/constants';
-import TableEmpty from '@/views/shared/TableEmpty.vue';
+import TableEmpty from '@/components/shared/TableEmpty.vue';
 
 export default Vue.extend({
   name: 'TokensManage',

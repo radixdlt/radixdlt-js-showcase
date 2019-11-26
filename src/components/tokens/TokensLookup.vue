@@ -25,7 +25,7 @@
 import Vue from 'vue';
 import { radixTokenManager } from 'radixdlt';
 import { NotificationType } from '@/constants';
-import TokensLookupDetailRow from '@/views/tokens/TokensLookupDetailRow.vue';
+import TokensLookupDetailRow from '@/components/tokens/TokensLookupDetailRow.vue';
 
 export default Vue.extend({
   name: 'TokensLookup',

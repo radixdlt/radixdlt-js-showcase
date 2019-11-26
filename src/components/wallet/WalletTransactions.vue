@@ -55,7 +55,7 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import { RadixTransactionUpdate, RadixTransaction, RRI } from 'radixdlt';
 import { Subscription } from 'rxjs';
-import TableEmpty from '@/views/shared/TableEmpty.vue';
+import TableEmpty from '@/components/shared/TableEmpty.vue';
 
 export default Vue.extend({
   name: 'WalletTransactions',

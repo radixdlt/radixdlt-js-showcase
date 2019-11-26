@@ -64,7 +64,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { RadixIdentity, RadixAddress } from 'radixdlt';
-import TableEmpty from '@/views/shared/TableEmpty.vue';
+import TableEmpty from '@/components/shared/TableEmpty.vue';
 
 export default Vue.extend({
   name: 'DataRead',

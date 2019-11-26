@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import IdentityManage from '@/views/identity/IdentityManage.vue';
+import IdentityManage from '@/components/identity/IdentityManage.vue';
 
 export default Vue.extend({
   name: 'AppHeader',

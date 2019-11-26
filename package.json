@@ -2,6 +2,10 @@
   "name": "radixdlt-js-showcase",
   "version": "0.1.0",
   "private": true,
+  "contributors": [
+    "George Tanev <george@radixdlt.com>",
+    "Edgars Nemše <edgars@radixdlt.com>"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
