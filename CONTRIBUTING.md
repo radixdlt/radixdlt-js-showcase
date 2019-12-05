@@ -25,10 +25,10 @@ We use [yarn only](https://yarnpkg.com/lang/en/).
 
 ### Reporting a bug
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/radixdlt/radixdlt-js/issues).
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/radixdlt/radixdlt-js/issues/new). Be sure to include:
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/radixdlt/radixdlt-js-showcase/issues).
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/radixdlt/radixdlt-js-showcase/issues/new). Be sure to include:
   * a **title**,
-  * a **clear description**, 
+  * a **clear description**,
   * as much **relevant information** as possible,
   * a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
