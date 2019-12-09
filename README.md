@@ -8,7 +8,7 @@ This is a [Vue.js](https://vuejs.org/) based project showcasing the different th
 
 ## Features
 
-* See your balance and transction history
+* See your balance and transaction history
 * Send tokens
 * Write and read messages
 * Create and manage token definitions
