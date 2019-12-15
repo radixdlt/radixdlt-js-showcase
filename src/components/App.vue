@@ -63,6 +63,17 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/index.scss";
+
+/deep/ .menu-list a {
+  border-radius: 1.5rem 0 0 1.5rem;
+  padding-left: 1.5rem;
+
+  &:hover:not(.is-active) {
+    background-color: darken($light, 10%);
+  }
+}
+
 /deep/ .section {
   margin-right: 30px;
   margin-left: 30px;

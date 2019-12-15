@@ -42,10 +42,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.menu-list a {
-  border-radius: 0;
-}
-
 .logo {
   height: 40px;
   max-height: 40px;
