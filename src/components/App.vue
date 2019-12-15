@@ -78,13 +78,13 @@ export default Vue.extend({
   padding-top: 10px;
 }
 
-/deep/ #footer-row {
+/deep/ .footer-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-/deep/ #footer-row > button {
+/deep/ .footer-row > button {
   display: flex;
   width: 200px;
   margin-left: 20px;

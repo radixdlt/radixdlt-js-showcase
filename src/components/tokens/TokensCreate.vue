@@ -34,7 +34,7 @@
       </b-field>
 
       <b-field label="Issuance type">
-        <div id="footer-row">
+        <div class="footer-row">
           <b-field class="radio-group" expanded>
             <b-radio v-model="multiIssuance" native-value="false">
               Single-Issuance

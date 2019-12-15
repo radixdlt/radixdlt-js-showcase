@@ -15,7 +15,7 @@
         <b-input type="textarea" placeholder="" v-model="payload"></b-input>
       </b-field>
       <b-field>
-        <div id="footer-row">
+        <div class="footer-row">
           <b-switch v-model="encrypted">
             Encrypt
           </b-switch>

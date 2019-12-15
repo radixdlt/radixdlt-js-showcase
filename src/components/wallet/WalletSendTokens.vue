@@ -22,7 +22,7 @@
         </b-select>
       </b-field>
       <b-field label="Amount">
-        <div id="footer-row">
+        <div class="footer-row">
           <b-field :message="getBalance()">
             <b-input type="number" min="0" step="any" v-model="amount" expanded :disabled="!token"></b-input>
           </b-field>
