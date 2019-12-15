@@ -134,3 +134,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+label.radio {
+  padding-top: 0;
+}
+</style>

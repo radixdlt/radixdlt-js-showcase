@@ -86,3 +86,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+label.switch {
+  padding-top: 0;
+}
+</style>
