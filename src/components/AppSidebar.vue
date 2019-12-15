@@ -1,8 +1,8 @@
 <template>
-  <b-menu class="has-padding-left-10">
-    <div class="has-padding-left-5 has-padding-bottom-50">
+  <b-menu class="has-padding-left-15">
+    <div class="has-padding-top-50 has-padding-right-15 has-padding-bottom-50 has-text-centered">
       <a href="https://radixdlt.com">
-        <img src="../assets/radix-logo.svg" alt="Radix Logo" height="35" style="max-height: 35px" />
+        <img src="../assets/radix-logo.svg" alt="Radix Logo" class="logo" />
       </a>
     </div>
     <b-menu-list
@@ -44,5 +44,10 @@ export default Vue.extend({
 <style scoped>
 .menu-list a {
   border-radius: 0;
+}
+
+.logo {
+  height: 40px;
+  max-height: 40px;
 }
 </style>

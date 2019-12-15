@@ -63,10 +63,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.sidebar aside {
-  padding: 0.5rem 0 0 0.5rem;
-}
-
 /deep/ .section {
   margin-right: 30px;
   margin-left: 30px;
