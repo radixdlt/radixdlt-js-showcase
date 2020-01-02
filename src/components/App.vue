@@ -63,8 +63,15 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.sidebar aside {
-  padding: 0.5rem 0 0 0.5rem;
+@import "@/styles/index.scss";
+
+/deep/ .menu-list a {
+  border-radius: 1.5rem 0 0 1.5rem;
+  padding-left: 1.5rem;
+
+  &:hover:not(.is-active) {
+    background-color: darken($light, 10%);
+  }
 }
 
 /deep/ .section {
@@ -82,13 +89,13 @@ export default Vue.extend({
   padding-top: 10px;
 }
 
-/deep/ #footer-row {
+/deep/ .footer-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-/deep/ #footer-row > button {
+/deep/ .footer-row > button {
   display: flex;
   width: 200px;
   margin-left: 20px;
