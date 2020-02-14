@@ -123,7 +123,7 @@ export default Vue.extend({
       )
         .signAndSubmit(this.identity)
         .subscribe({
-          next: status => this.showStatus(status),
+          next: status => this.showStatus(status.status),
           complete: () => this.showStatus('TOKEN DEFINITION CREATED', NotificationType.SUCCESS),
           error: error => this.showStatus(error.message || error, NotificationType.ERROR),
         });

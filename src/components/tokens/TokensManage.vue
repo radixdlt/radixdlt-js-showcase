@@ -134,7 +134,7 @@ export default Vue.extend({
         RadixTransactionBuilder.createMintAtom(this.identity.account, tokenReference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
-            next: status => this.showStatus(status),
+            next: status => this.showStatus(status.status),
             complete: () => this.showStatus('Tokens have been minted', NotificationType.SUCCESS),
             error: error => this.showStatus(error.message, NotificationType.ERROR),
           });
@@ -147,7 +147,7 @@ export default Vue.extend({
         RadixTransactionBuilder.createBurnAtom(this.identity.account, tokenReference, new Decimal(amount))
           .signAndSubmit(this.identity)
           .subscribe({
-            next: status => this.showStatus(status),
+            next: status => this.showStatus(status.status),
             complete: () => this.showStatus('Tokens have been burned', NotificationType.SUCCESS),
             error: error => this.showStatus(error.message, NotificationType.ERROR),
           });

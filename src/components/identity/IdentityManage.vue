@@ -94,7 +94,6 @@ export default Vue.extend({
       if (keyStoreJSON) {
         const address = await RadixKeyStore.decryptKey(JSON.parse(keyStoreJSON), this.keyStorePassword);
         const identity = this.identityManager.addSimpleIdentity(address);
-        await identity.account.openNodeConnection();
         this.$store.commit('setIdentity', identity);
       } else {
         this.generateIdentity();
@@ -102,7 +101,6 @@ export default Vue.extend({
     },
     async generateIdentity() {
       const identity = this.identityManager.generateSimpleIdentity();
-      await identity.account.openNodeConnection();
 
       this.$store.commit('setIdentity', identity);
 
@@ -112,7 +110,6 @@ export default Vue.extend({
     async importIdentity(userKeyStore: string, userPassword: string) {
       const address = await RadixKeyStore.decryptKey(JSON.parse(userKeyStore), userPassword);
       const identity = this.identityManager.addSimpleIdentity(address);
-      await identity.account.openNodeConnection();
 
       this.$store.commit('setIdentity', identity);
 
@@ -131,8 +128,6 @@ export default Vue.extend({
         host,
         port,
       );
-
-      await identity.account.openNodeConnection();
 
       this.$store.commit('setIdentity', identity);
     },

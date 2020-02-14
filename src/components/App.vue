@@ -37,7 +37,7 @@ export default Vue.extend({
     'app-sidebar': AppSidebar,
   },
   created() {
-    radixUniverse.bootstrap(RadixUniverse.BETANET_EMULATOR);
+    radixUniverse.bootstrap(RadixUniverse.LOCALHOST);
   },
   beforeDestroy() {
     radixUniverse.closeAllConnections();
